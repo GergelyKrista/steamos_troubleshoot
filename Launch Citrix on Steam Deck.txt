@@ -1,0 +1,26 @@
+How to Launch Citrix on Steam Deck (Desktop Mode)
+===================================================
+
+Prerequisites:
+- Citrix Workspace (icaclient) installed at /opt/Citrix/ICAClient/
+- An ICA file downloaded from your Citrix web portal
+
+Steps:
+1. Download a new ICA file from your Citrix web portal (e.g. via browser).
+   The file will appear in ~/Downloads/ with a name like:
+   VkNTZURhYVMuVkNTZSBQcm9kdWN0aW9uICRQMTAzOTI- (8).ica
+
+2. Open a terminal (Konsole) and run:
+   /opt/Citrix/ICAClient/wfica ~/Downloads/<your-ica-file>.ica
+
+   Example:
+   /opt/Citrix/ICAClient/wfica "/home/deck/Downloads/VkNTZURhYVMuVkNTZSBQcm9kdWN0aW9uICRQMTAzOTI- (8).ica"
+
+   Tip: To find the latest ICA file automatically:
+   /opt/Citrix/ICAClient/wfica "$(ls -t ~/Downloads/*.ica | head -1)"
+
+Notes:
+- xdg-open may not work reliably on SteamOS for ICA files. Use wfica directly.
+- The "Failed to load module canberra-gtk-module" warning is harmless and can be ignored.
+- ICA files are single-use session tokens. Download a fresh one each time you connect.
+- Make sure you are in Desktop Mode, not Gaming Mode.

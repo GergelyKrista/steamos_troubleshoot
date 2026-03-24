@@ -14,12 +14,14 @@ The Bluetooth headphones (Sony WH-1000XM5) were connected but in a **"suspended"
 
 ### Technical Details
 ```
-Bluetooth Device: WH-1000XM5 (88:C9:E8:9C:7F:4E)
+Bluetooth Device: WH-1000XM5 (your device's MAC address)
 State: suspended
 Bluetooth Transport: empty/inactive
 Codec: LDAC
 Profile: a2dp-sink
 ```
+
+> To find your device's MAC address: `bluetoothctl devices`
 
 The PipeWire audio system showed the device as default but couldn't actually route audio to it because the Bluetooth transport layer was not active.
 
@@ -83,10 +85,14 @@ systemctl --user restart pipewire pipewire-pulse wireplumber
 Sometimes after reconnecting, the Bluetooth transport stays in "suspended" state with an empty transport even though the device appears connected. Playing a test tone directly to the headphones forces the transport to activate.
 
 ```bash
-# Step 1: Set Bluetooth headphones as default sink
-pw-metadata -n default 0 default.audio.sink '{"name":"bluez_output.88_C9_E8_9C_7F_4E.1"}'
+# Step 1: Find your Bluetooth sink name
+# Look for a line like "bluez_output.XX_XX_XX_XX_XX_XX.1" where XX's are your MAC address
+pw-cli list-objects Node | grep -E "(node.name|node.description)" | grep -B1 bluez_output
 
-# Step 2: Generate a test tone WAV file
+# Step 2: Set Bluetooth headphones as default sink (replace with your sink name from Step 1)
+pw-metadata -n default 0 default.audio.sink '{"name":"bluez_output.YOUR_MAC_ADDRESS.1"}'
+
+# Step 3: Generate a test tone WAV file
 python3 -c "
 import struct, math, wave
 rate = 48000
@@ -99,9 +105,12 @@ with wave.open('/tmp/test_tone.wav', 'w') as f:
         f.writeframes(struct.pack('<hh', val, val))
 "
 
-# Step 3: Play the test tone to the Bluetooth headphones (target 193 = WH-1000XM5)
-# Find the target ID with: pw-play --list-targets
-pw-play --target 193 /tmp/test_tone.wav
+# Step 4: Find the target ID for your headphones
+pw-play --list-targets
+# Look for your headphones in the output and note the ID number
+
+# Step 5: Play the test tone (replace TARGET_ID with the ID from Step 4)
+pw-play --target TARGET_ID /tmp/test_tone.wav
 ```
 
 You should hear a short beep and the Bluetooth transport will become active. All other audio (Citrix, browser, etc.) will then route through the headphones.
@@ -285,7 +294,7 @@ alias health-check='echo "=== AUDIO ===" && systemctl --user status pipewire | g
 
 | Problem | Quick Fix |
 |---------|-----------|
-| No Bluetooth audio | Reconnect, then play test tone: `pw-play --target 193 /tmp/test_tone.wav` |
+| No Bluetooth audio | Reconnect, then play test tone (see Option 3 above) |
 | Videos won't load | Fix audio first, then test network |
 | No audio devices | `systemctl --user restart pipewire pipewire-pulse wireplumber` |
 | System slow | Check `top`, close apps, restart if needed |

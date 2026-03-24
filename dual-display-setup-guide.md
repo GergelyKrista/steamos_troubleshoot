@@ -7,7 +7,7 @@
 ## What Was The Issue?
 
 ### Problem
-After fixing the display switching loop (see: `/home/deck/Development/steamdeck-display-switching-loop-fix.md`), the system was configured to use **only the external monitor** with the internal Steam Deck display turned OFF.
+After fixing the display switching loop, the system was configured to use **only the external monitor** with the internal Steam Deck display turned OFF.
 
 ### Configuration State
 - **Internal Display (eDP):** Disabled
@@ -302,8 +302,7 @@ Then you can simply type:
 
 ## Related Documentation
 
-- **Display Switching Loop Fix:** `/home/deck/Development/steamdeck-display-switching-loop-fix.md`
-- **Audio Troubleshooting:** `/home/deck/Desktop/audio-video-troubleshooting-guide.md`
+- **Audio Troubleshooting:** [audio-video-troubleshooting-guide.md](audio-video-troubleshooting-guide.md)
 
 ---
 

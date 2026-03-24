@@ -18,7 +18,7 @@ if [ "$EXTERNAL_STATUS" = "connected" ]; then
 fi
 
 echo "Monitor not detected. Resetting USB hub to force DP re-negotiation..."
-log "Resetting USB hub (GenesysLogic 05e3:0626)"
+log "Resetting USB hub"
 
 # Unbind and rebind the USB3 hub to force full re-enumeration
 # This makes the dock re-negotiate DisplayPort Alt Mode

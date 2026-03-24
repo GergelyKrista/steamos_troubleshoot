@@ -19,13 +19,8 @@ log "KScreen processes killed"
 sleep 2
 
 # Find xrandr binary
-XRANDR="/home/deck/.local/share/Steam/steamapps/common/SteamLinuxRuntime_soldier/soldier_platform_2.0.20260119.200234/files/bin/xrandr"
-
-# Fallback: try to find xrandr if the path changed
-if [ ! -f "$XRANDR" ]; then
-    XRANDR=$(find /home/deck/.local/share/Steam -name "xrandr" -type f 2>/dev/null | grep soldier_platform | head -1)
-    log "xrandr not at default path, found at: $XRANDR"
-fi
+# Find xrandr from Steam Runtime (version in path changes with updates)
+XRANDR=$(find /home/deck/.local/share/Steam/steamapps/common/SteamLinuxRuntime_soldier -name "xrandr" -type f 2>/dev/null | head -1)
 
 if [ ! -f "$XRANDR" ]; then
     log "ERROR: xrandr binary not found"

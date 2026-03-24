@@ -150,10 +150,10 @@ tail -20 /home/deck/.config/display-fix.log
 ## System Information
 
 - **Device:** Steam Deck
-- **OS:** SteamOS 3.x (Arch Linux based, kernel 6.11.11-valve26)
+- **OS:** SteamOS 3.x (Arch Linux based)
 - **Desktop Environment:** KDE Plasma (X11)
-- **GPU:** AMD Custom GPU 0932 (amdgpu driver)
-- **Dock:** GenesysLogic USB3.1 Hub (05e3:0626)
+- **GPU:** AMD Custom GPU (amdgpu driver)
+- **Dock:** USB-C hub with DisplayPort Alt Mode support
 - **Internal Display:** eDP, 800x1280 @ 90Hz
 - **External Monitor:** DisplayPort-0, 1920x1080 @ 60Hz
 
